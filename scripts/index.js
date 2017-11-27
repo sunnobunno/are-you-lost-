@@ -14,9 +14,16 @@ $(function() {
     });
     
     $("#yes").click(function() {
-        $("#lost1").animateCss('zoomOut', function() {
-            $("#lost1").hide();
-        });
+        $("#yes").addClass('animated flash');
+        var timeout = window.setTimeout(function() {
+            $("#yes").removeClass('animated flash');
+            $("#lost1-prompt").removeClass("animated fadeIn");
+            $("#lost1").animateCss('zoomOut', function() {
+                $("#lost1").hide();
+                displayPrompt("#lost2");
+            });
+        }, 1000);
+        
     });
     
     $("#no").click(function() {
@@ -25,7 +32,12 @@ $(function() {
         });
         $("#lost1-prompt").animateCss('fadeOut', function() {
             $("#lost1-prompt").text("how about now?");
-            $("#lost1-prompt").addClass("animated fadeIn");
+            $("#lost1-prompt").animateCss("fadeIn");
         });
     });
 });
+
+function displayPrompt(promptId) {
+    $(promptId).show();
+    $(promptId).animateCss('zoomIn');
+}
